@@ -5,7 +5,6 @@ import icon from './icon';
 import API_KEY from './config';
 
 import './App.css';
-import { LatLngExpression } from 'leaflet';
 
 interface locationInterface {
   as: as;
