@@ -39,7 +39,6 @@ function App() {
   const [userLocation, setUserLocation] = useState<locationInterface | null>(
     null
   );
-  const [position, setPosition] = useState<LatLngExpression>([51.5, -0.09]);
 
   console.log(userAddress);
 
@@ -59,10 +58,6 @@ function App() {
         `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress=${userAddress}`
       );
       const data = await res.json();
-      setPosition([
-        userLocation?.location.lat ?? 0,
-        userLocation?.location.lng ?? 0,
-      ]);
       setUserLocation(data);
     };
     console.log('hi');
@@ -117,7 +112,7 @@ function App() {
       <main>
         {userLocation ? (
           <MapContainer
-            center={position}
+            center={[userLocation?.location.lat, userLocation?.location.lng]}
             zoom={13}
             scrollWheelZoom={true}
             style={{ height: '100%', width: '100wh' }}
@@ -126,7 +121,13 @@ function App() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker icon={icon} position={position}>
+            <Marker
+              icon={icon}
+              position={[
+                userLocation?.location.lat,
+                userLocation?.location.lng,
+              ]}
+            >
               <Popup>
                 A pretty CSS3 popup. <br /> Easily customizable.
               </Popup>
